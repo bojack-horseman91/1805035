@@ -72,7 +72,7 @@ void imageProcessing()
             }
            }
            if(t_min_value>0){
-             std::cout<<color.r*255<<" "<<color.g*255<<" "<<color.b*255<<std::endl;
+            //  std::cout<<color.r*255<<" "<<color.g*255<<" "<<color.b*255<<std::endl;
              image.set_pixel(col,row, (color.r * 255), color.g * 255, color.b * 255);
            }
 
