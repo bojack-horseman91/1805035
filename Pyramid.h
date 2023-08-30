@@ -1,12 +1,18 @@
 #ifndef PYRAMID_H
 #define PYRAMID_H
 #include "Object.h"
+#include "points3D.h"
+#include "Ray.h"
+#include <GL/glut.h>
+#include "globals.h"
+#include "triangle.h"
 class Pyramid :public Object
 {
     public:
     points3D lowerLeft;
     double width, height;
     rgb color;
+    triangle faces[4];
     ReflectionCoefficient reflectionCoefficient;
     int shininess;
     Pyramid();

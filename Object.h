@@ -16,15 +16,17 @@ class Object{
     ReflectionCoefficient reflectionCoefficient;
     int shininess;
     points3D intersectionPoint;
+    points3D normalAtIntersectionPoint,reflectedRay;
     Object();
     Object(rgb color, ReflectionCoefficient reflectionCoefficient, int shininess);
     virtual bool getIntersectionPoints(Ray ray)=0;
-    void getAmbientColor();
-    void getDiffuseAndSpecularColor(points3D normal, points3D intersectionPoint,points3D reflectedRay);
+    rgb getAmbientColor();
+    rgb getDiffuseAndSpecularColor();
     rgb getCalculatedLight(){
         return calculated_light;
     }
     virtual void draw() = 0;
+    bool willIlluminate(Ray ray);
 
 };
 

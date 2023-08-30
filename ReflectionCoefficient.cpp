@@ -8,10 +8,10 @@ ReflectionCoefficient::ReflectionCoefficient(double ambient, double diffuse, dou
 }
 ReflectionCoefficient::ReflectionCoefficient(){
     //0.04 0.03 0.03 0.9
-    this->ambient = .4;
+    this->ambient = .15;
     this->diffuse = .3;
     this->specular = .3;
-    this->reflection = 0.9;
+    this->reflection = 0.1;
 }
 //input stream
 std::istream& operator>>(std::istream& in, ReflectionCoefficient& reflectionCoefficient){

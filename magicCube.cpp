@@ -154,8 +154,9 @@ int main(int argc, char **argv)
     // pointGeneration();
     // for(int i=0; i < a. size(); i++)
     //     std::cout << a.at(i) << ' ';
-    myObjects.push_back(new sphere());
-    myObjects.push_back(new sphere(points3D(3,0,0),3,rgb(1,0,1),ReflectionCoefficient(),2));
+    // myObjects.push_back(new sphere());
+    myObjects.push_back(new Pyramid(points3D(-40.0 ,0.0 ,5.0),30,40,rgb(1,0,0),ReflectionCoefficient(0.4 ,0.1, 0.0, 0.4),20));
+    myObjects.push_back(new sphere(points3D(-20,0,-20),15,rgb(0,0,1),ReflectionCoefficient(0.2, 0.3, 0.1, 0.3),20));
     myLightSources.push_back(new NormalLightSource(points3D(-2,-3,3),0.000002));
     myLightSources.push_back(new NormalLightSource(points3D(-3,3,3),0.000000002));
     glutInit(&argc, argv);                                    // Initialize GLUT

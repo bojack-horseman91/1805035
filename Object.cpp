@@ -22,27 +22,37 @@ Object::Object(rgb color, ReflectionCoefficient reflectionCoefficient, int shini
     calculated_light = rgb();
     t_value = -1;
 }
-void Object::getAmbientColor()
+rgb Object::getAmbientColor()
 {
 
-    // calculated_light = 
+    return color * reflectionCoefficient.ambient;
+}
+bool Object::willIlluminate(Ray ray){
+    for(Object*obj:myObjects){
+            if(obj==this)continue;
+            if(obj->getIntersectionPoints(ray)){
+                return false;
+            }
+        }
+    return true;
 }
 
-void Object::getDiffuseAndSpecularColor(points3D normal, points3D intersectionPoint, points3D reflectedRay)
-{
+rgb Object::getDiffuseAndSpecularColor(){
+    points3D normal=normalAtIntersectionPoint;
+    points3D reflectedRay=this->reflectedRay.normalize();
     double lambert = 0;
     double phong = 0;
     const double epsilon = 0.001; // Define your desired epsilon value
        // Calculate ambient light
-    rgb ambient = color * reflectionCoefficient.ambient;
+    
     for (LightSource *lightSource : myLightSources)
     {
         points3D toSource = (lightSource->sourcePosition - intersectionPoint);
         points3D newPoint=intersectionPoint+toSource.normalize()*epsilon;
-        for(Object*obj:myObjects){
-            if(obj->getIntersectionPoints(Ray(newPoint,toSource.normalize()))){
-                continue;
-            }
+        if(!willIlluminate(Ray(newPoint,toSource.normalize())))
+        {
+            // lambert+=0.2;
+            continue;
         }
         double d = toSource.length();
         double scalingFactor = exp(-(d * d * lightSource->fallOff));
@@ -58,11 +68,11 @@ void Object::getDiffuseAndSpecularColor(points3D normal, points3D intersectionPo
  
     
     // Add diffuse and specular contributions
-     calculated_light = ambient+ rgb(1,1,1) * (lambert + phong);
+     return  rgb(1,1,1) * (lambert + phong);
     
     // You can use 'calculated_light' for shading or rendering.
 
 
 }
 
-rgb recursiveReflection(Ray ray,)
+
