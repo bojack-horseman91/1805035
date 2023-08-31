@@ -10,6 +10,10 @@
 #include "Ray.h"
 #include "Pyramid.h"
 #include "NormalLightSource.h"
+#include "floor.h"
+#include "Cube.h"
+// #include "globals.h"
+#include "readFile.h"
 // #include "imageCapture.h"
 // #include "cylinder.h"
 
@@ -155,10 +159,17 @@ int main(int argc, char **argv)
     // for(int i=0; i < a. size(); i++)
     //     std::cout << a.at(i) << ' ';
     // myObjects.push_back(new sphere());
-    myObjects.push_back(new Pyramid(points3D(-40.0 ,0.0 ,5.0),30,40,rgb(1,0,0),ReflectionCoefficient(0.4 ,0.1, 0.0, 0.4),20));
-    myObjects.push_back(new sphere(points3D(-20,0,-20),15,rgb(0,0,1),ReflectionCoefficient(0.2, 0.3, 0.1, 0.3),20));
-    myLightSources.push_back(new NormalLightSource(points3D(-2,-3,3),0.000002));
-    myLightSources.push_back(new NormalLightSource(points3D(-3,3,3),0.000000002));
+    // myObjects.push_back(new Pyramid(points3D(-40.0 ,0.0 ,5.0),30,40,rgb(1,0,0),ReflectionCoefficient(0.4 ,0.1, 0.0, 0.4),20));
+    // myObjects.push_back(new sphere(points3D(-20,0,-20),15,rgb(0,0,1),ReflectionCoefficient(0.2, 0.3, 0.1, 0.3),20));
+    // Object *floorObject =new Floor(50,rgb(1,1,1),ReflectionCoefficient(0.1, 0.3, 0, 0.6),10);
+    // floorObject->isFloor=true;
+    // myObjects.push_back(floorObject);
+    // myObjects.push_back(new Cube(points3D(0,10,0),10,rgb(0,1,0),ReflectionCoefficient(0.15 ,0.1 ,0.4 ,0.45),20));
+    // myLightSources.push_back(new NormalLightSource(points3D(-2,50,3),0.0000002));
+    // myLightSources.push_back(new NormalLightSource(points3D(10,3,3),0.000002));
+    readFile();
+    // myObjects;
+    // myLightSources;
     glutInit(&argc, argv);                                    // Initialize GLUT
     glutInitWindowSize(640, 640);                             // Set the window's initial width & height
     glutInitWindowPosition(50, 50);                           // Position the window's initial top-left corner

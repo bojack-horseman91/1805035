@@ -12,6 +12,7 @@ class Object{
     public:
     rgb calculated_light;
     rgb color;
+    bool  isFloor=false;
     double t_value;
     ReflectionCoefficient reflectionCoefficient;
     int shininess;
@@ -26,7 +27,7 @@ class Object{
         return calculated_light;
     }
     virtual void draw() = 0;
-    bool willIlluminate(Ray ray);
+    bool willIlluminate(Ray ray,double distance);
 
 };
 

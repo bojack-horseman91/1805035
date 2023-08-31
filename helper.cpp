@@ -99,3 +99,11 @@ rgb rgb::operator+(const rgb &p) {
   temp.b = this->b + p.b;
   return temp;
 }
+std::istream& operator>>(std::istream& in, rgb& rgb){
+    in>>rgb.r>>rgb.g>>rgb.b;
+    return in;
+}
+std::ostream& operator<<(std::ostream& out, const rgb& rgb){
+    out<<rgb.r<<" "<<rgb.g<<" "<<rgb.b;
+    return out;
+}

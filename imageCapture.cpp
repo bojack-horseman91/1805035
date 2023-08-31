@@ -2,17 +2,21 @@
 #include "GL/glut.h"
 
 const int numberOfPixels = 768;
-// points3D pointBuffer[numberOfPixels*numberOfPixels];
+// Ray **rays;
 Ray rays[numberOfPixels][numberOfPixels];
-
 void pointGeneration()
 {
+//     rays = new Ray *[numberOfPixels];
+//     for (int i = 0; i < numberOfPixels; ++i)
+//     {
+//         rays[i] = new Ray[numberOfPixels];
+//     }
     double fovX = fovY * aspectRatio;
     double planeHeight = 2 * nearZ * tan(fovY / 2 * DEG2RAD);
     double planeWidth = 2 * nearZ * tan(fovX / 2 * DEG2RAD);
     points3D middlePoint = eye + (center - eye).normalize() * nearZ;
     points3D rightVector = (center - eye).cross(up).normalize();
-    points3D topLeft=middlePoint+up*(planeHeight/2)-rightVector*(planeWidth/2);
+    points3D topLeft = middlePoint + up * (planeHeight / 2) - rightVector * (planeWidth / 2);
     // find top right point
 
     // generate all rays from  this
@@ -25,15 +29,13 @@ void pointGeneration()
             points3D rayDirection = topLeft + rightVector * (col * pixelWidth) - up * (row * pixelHeight);
             // Create a ray starting from the camera position and going in the calculated direction
             // rays[row][col].origin = eye;
-            rays[row][col] = Ray(eye,(rayDirection - eye).normalize());
+            rays[row][col] = Ray(eye, (rayDirection - eye).normalize());
 
             // pointBuffer[row*numberOfPixels+col]=rayDirection;
         }
-        
     }
 
     std::cout << "point generation completed" << std::endl;
-
 }
 rgb rayTracing(Ray ray, int levelOfDepth)
 {
@@ -47,7 +49,7 @@ rgb rayTracing(Ray ray, int levelOfDepth)
         if (obj->getIntersectionPoints(ray))
         {
             // std::cout<<obj->t_value<<std::endl;
-            if (obj->t_value>0 && (t_min_value > obj->t_value||t_min_value==-1))
+            if (obj->t_value > 0 && (t_min_value > obj->t_value || t_min_value == -1))
             {
                 t_min_value = obj->t_value;
                 // color = obj->calculated_light;
@@ -65,10 +67,11 @@ rgb rayTracing(Ray ray, int levelOfDepth)
     color = color + rayTracing(reflected, levelOfDepth + 1) * selectedobj->reflectionCoefficient.reflection;
     // std::cout<<"color is :"<<color.r<<" "<<color.g<<" "<<color.b<<std::endl;
     // return selectedobj->color;
+    // if(selectedobj->isFloor){
+    //     std::cout<<selectedobj->color.r<<" "<<selectedobj->color.g<<" "<<selectedobj->color.b<<std::endl;
+    // }
     return color;
 }
-
-
 
 void imageProcessing()
 {
@@ -99,8 +102,8 @@ void imageProcessing()
             //  std::cout<<color.r*255<<" "<<color.g*255<<" "<<color.b*255<<std::endl;
             image.set_pixel(col, row, (color.r * 255), color.g * 255, color.b * 255);
         }
-        if(row%100==0)
-            std::cout<<"rendering done: "<<row<<" "<<row/numberOfPixels*100.00<<"%"<<std::endl;
+        if (row % 100 == 0)
+            std::cout << "rendering done: " << row << " " << row / numberOfPixels * 100.00 << "%" << std::endl;
     }
     std::cout << "almost done" << std::endl;
     image.save_image("test.bmp");
@@ -111,5 +114,5 @@ void captureImage()
 {
     pointGeneration();
     imageProcessing();
+    // delete[] rays;
 }
-

@@ -22,8 +22,10 @@ void Pyramid::draw(){
     calculatePyramidVertices();
 
     // Draw base
-    drawBase(pyramidVertices[0], pyramidVertices[1], pyramidVertices[2], pyramidVertices[3]);
+    // drawBase(pyramidVertices[0], pyramidVertices[1], pyramidVertices[2], pyramidVertices[3]);
+    base.draw();
     //draw 4 faces
+
     rgb testc[4]={red,green,blue,yellow};
     for(int i=0;i<4;i++){
         rgb c=testc[i];
@@ -77,7 +79,7 @@ void Pyramid::calculatePyramidVertices() {
     faces[1] = triangle(pyramidVertices[1], pyramidVertices[2], pyramidVertices[4]);
     faces[2] = triangle(pyramidVertices[2], pyramidVertices[3], pyramidVertices[4]);
     faces[3] = triangle(pyramidVertices[3], pyramidVertices[0], pyramidVertices[4]);
-
+    base = plane(pyramidVertices[0], pyramidVertices[1], pyramidVertices[2], pyramidVertices[3]);
     // for(int i=0;i<4;i++){
     //     faces[i].print();
     // }
@@ -88,6 +90,7 @@ bool Pyramid::getIntersectionPoints(Ray ray){
     //TODO
     double t_min=-1;
     triangle min_face;
+    bool isBase=false;
     for(int i=0;i<4;i++){
         // double t = faces[i].intersectionPointusingBarycentricEquation(ray);
         double t=faces[i].rayIntersection(ray,intersectionPoint);
@@ -98,11 +101,23 @@ bool Pyramid::getIntersectionPoints(Ray ray){
         }
             
     }
+    double t=base.getIntersection(ray);
+    if(t>0&&(t_min>t||t_min==-1)){
+        t_min = t;
+        isBase=true;
+    }
     if(t_min>0){
         t_value=t_min;
         // std::cout<<"ok"<<std::endl;
+        
         intersectionPoint = ray.origin + ray.direction*t_min;
-        normalAtIntersectionPoint = min_face.getNormal(intersectionPoint);
+        if(isBase){
+            normalAtIntersectionPoint = base.getNormal(intersectionPoint);
+        }
+        else{
+            normalAtIntersectionPoint = min_face.getNormal(intersectionPoint);
+        }
+        // normalAtIntersectionPoint = min_face.getNormal(intersectionPoint);
         reflectedRay=ray.direction-normalAtIntersectionPoint*(ray.direction.dot(normalAtIntersectionPoint))*2;
         // color=rgb(1,1,0);
         return true;

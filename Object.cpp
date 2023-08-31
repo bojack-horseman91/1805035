@@ -27,15 +27,7 @@ rgb Object::getAmbientColor()
 
     return color * reflectionCoefficient.ambient;
 }
-bool Object::willIlluminate(Ray ray){
-    for(Object*obj:myObjects){
-            if(obj==this)continue;
-            if(obj->getIntersectionPoints(ray)){
-                return false;
-            }
-        }
-    return true;
-}
+
 
 rgb Object::getDiffuseAndSpecularColor(){
     points3D normal=normalAtIntersectionPoint;
@@ -49,11 +41,11 @@ rgb Object::getDiffuseAndSpecularColor(){
     {
         points3D toSource = (lightSource->sourcePosition - intersectionPoint);
         points3D newPoint=intersectionPoint+toSource.normalize()*epsilon;
-        if(!willIlluminate(Ray(newPoint,toSource.normalize())))
-        {
-            // lambert+=0.2;
-            continue;
-        }
+       
+        // if(!lightSource->willIlluminate(this,Ray(newPoint,toSource.normalize()),toSource.length()))
+        // {
+        //     continue;
+        // }
         double d = toSource.length();
         double scalingFactor = exp(-(d * d * lightSource->fallOff));
         toSource = toSource.normalize();
@@ -68,7 +60,7 @@ rgb Object::getDiffuseAndSpecularColor(){
  
     
     // Add diffuse and specular contributions
-     return  rgb(1,1,1) * (lambert + phong);
+     return  this->color* (lambert )+ color * (this->isFloor?0:1) * phong;
     
     // You can use 'calculated_light' for shading or rendering.
 

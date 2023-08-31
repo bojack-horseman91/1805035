@@ -6,11 +6,13 @@
 #include <GL/glut.h>
 #include "globals.h"
 #include "triangle.h"
+#include "plane.h"
 class Pyramid :public Object
 {
     public:
     points3D lowerLeft;
     double width, height;
+    plane base;
     rgb color;
     triangle faces[4];
     ReflectionCoefficient reflectionCoefficient;

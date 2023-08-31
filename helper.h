@@ -13,6 +13,8 @@ public:
     //multiplication operator
     rgb operator*(const double &p);
     rgb operator+(const rgb &p);
+    friend std::istream& operator>>(std::istream& in, rgb& rgb);
+    friend std::ostream& operator<<(std::ostream& out, const rgb& rgb);
 };
 
 
