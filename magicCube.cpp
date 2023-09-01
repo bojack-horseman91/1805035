@@ -34,17 +34,17 @@ void drawAxes()
     glColor3f(1, 0, 0); // Red
     // X axis
     glVertex3f(0, 0, 0);
-    glVertex3f(1, 0, 0);
+    glVertex3f(30, 0, 0);
 
     glColor3f(0, 1, 0); // Green
     // Y axis
     glVertex3f(0, 0, 0);
-    glVertex3f(0, 1, 0);
+    glVertex3f(0, 30, 0);
 
     glColor3f(0, 0, 1); // Blue
     // Z axis
     glVertex3f(0, 0, 0);
-    glVertex3f(0, 0, 10);
+    glVertex3f(0, 0, 30);
     glEnd();
 }
 const int numberOfPixels = 768;

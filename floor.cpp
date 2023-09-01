@@ -3,7 +3,7 @@
 
 void Floor::draw(){
     // std::cout<<"drawing floor"<<std::endl;
-    int size=1000;
+    int size=500;
     int checkerSize=50;
     //draw checkered infinte floor
    int numSquaresX = static_cast<int>(size / checkerSize);
@@ -36,11 +36,11 @@ bool Floor::getIntersectionPoints(Ray ray){
     t_value=-(ray.origin.dot(normal)+6)/ray.direction.dot(normal);
     if(t_value>0){
         intersectionPoint = ray.origin + ray.direction*t_value;
-        // if(normal.dot(intersectionPoint)<0){
-        //     normal = -normal;
-        // }
+        if(normal.dot(intersectionPoint)<0){
+            normal = -normal;
+        }
         //color at that intersection point
-        int size=1000;
+        int size=500;
         int squareX=static_cast<int>((intersectionPoint.x-size/2)/50);
         int squareY=static_cast<int>((intersectionPoint.y-size/2)/50);
         if((squareX+squareY)%2==0){
