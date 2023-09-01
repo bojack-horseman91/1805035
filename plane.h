@@ -77,6 +77,67 @@ public:
     //     points3D normal = edge1.cross(edge2).normalize();
     //     return normal;
     // }
+    
+    points3D smallestPointOn_particularAxis(points3D axis){
+        points3D smallestPoint;
+        //make dot product of axis with a,b,c,d return the smallest
+        double min=axis.dot(a);
+        smallestPoint=a;
+        if(axis.dot(b)<min){
+            min=axis.dot(b);
+            smallestPoint=b;
+        }
+        if(axis.dot(c)<min){
+            min=axis.dot(c);
+            smallestPoint=c;
+        }
+        if(axis.dot(d)<min){
+            min=axis.dot(d);
+            smallestPoint=d;
+        }
+
+        return smallestPoint;
+    }
+
+    points3D highestPointOn_particularAxis(points3D axis){
+        points3D highestPoint;
+        //make dot product of axis with a,b,c,d return the highest
+        double max=axis.dot(a);
+        highestPoint=a;
+        if(axis.dot(b)>max){
+            max=axis.dot(b);
+            highestPoint=b;
+        }
+        if(axis.dot(c)>max){
+            max=axis.dot(c);
+            highestPoint=c;
+        }
+        if(axis.dot(d)>max){
+            max=axis.dot(d);
+            highestPoint=d;
+        }
+
+        return highestPoint;
+    }
+
+    bool checkBounds(points3D intersectionPoint){ 
+        //check for each axis if the intersectionPoint is within
+        //the bounds of the plane that is a,b,c,d
+        //if it is then return true else false
+        points3D xAxis=points3D(1,0,0);
+        points3D yAxis=points3D(0,1,0);
+        points3D zAxis=points3D(0,0,1);
+        points3D xAxisSmallestPoint=smallestPointOn_particularAxis(xAxis);
+        points3D xAxisHighestPoint=highestPointOn_particularAxis(xAxis);
+        points3D yAxisSmallestPoint=smallestPointOn_particularAxis(yAxis);
+        points3D yAxisHighestPoint=highestPointOn_particularAxis(yAxis);
+        points3D zAxisSmallestPoint=smallestPointOn_particularAxis(zAxis);
+        points3D zAxisHighestPoint=highestPointOn_particularAxis(zAxis);
+        if(intersectionPoint.x>=xAxisSmallestPoint.x && intersectionPoint.x<=xAxisHighestPoint.x && intersectionPoint.y>=yAxisSmallestPoint.y && intersectionPoint.y<=yAxisHighestPoint.y && intersectionPoint.z>=zAxisSmallestPoint.z && intersectionPoint.z<=zAxisHighestPoint.z)
+            return true;
+        else
+            return false;
+    }
 };
 
 #endif

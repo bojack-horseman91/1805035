@@ -61,6 +61,10 @@ rgb rayTracing(Ray ray, int levelOfDepth)
     }
     if (t_min_value <= 0)
         return black;
+    //shift object point a little bit epsilon to avoid self intersection towards normal
+    double epsilon = 0.0001;
+    selectedobj->intersectionPoint = selectedobj->intersectionPoint + selectedobj->normalAtIntersectionPoint.normalize() * epsilon;
+
     Ray reflected = Ray(selectedobj->intersectionPoint, selectedobj->reflectedRay.normalize());
     rgb color = selectedobj->getAmbientColor();
     color = color + selectedobj->getDiffuseAndSpecularColor();

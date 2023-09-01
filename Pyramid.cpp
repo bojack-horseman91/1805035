@@ -65,16 +65,16 @@ void Pyramid::drawTriangle(points3D a, points3D b, points3D c) {
 
 void Pyramid::calculatePyramidVertices() {
     double xMid = lowerLeft.x + width / 2.0;
-    double zMid = lowerLeft.z + width / 2.0;
+    double yMid = lowerLeft.y + width / 2.0;
 
     // 4 Base vertices
     pyramidVertices[0] = points3D(lowerLeft.x, lowerLeft.y, lowerLeft.z);
     pyramidVertices[1] = points3D(lowerLeft.x + width, lowerLeft.y, lowerLeft.z);
-    pyramidVertices[2] = points3D(lowerLeft.x + width, lowerLeft.y , lowerLeft.z+width);
-    pyramidVertices[3] = points3D(lowerLeft.x, lowerLeft.y , lowerLeft.z+width);
+    pyramidVertices[2] = points3D(lowerLeft.x + width, lowerLeft.y +width, lowerLeft.z);
+    pyramidVertices[3] = points3D(lowerLeft.x, lowerLeft.y+width , lowerLeft.z);
 
     // Top vertex
-    pyramidVertices[4] = points3D(xMid, lowerLeft.y+height, zMid );
+    pyramidVertices[4] = points3D(xMid,  yMid,lowerLeft.z + height);
     faces[0] = triangle(pyramidVertices[0], pyramidVertices[1], pyramidVertices[4]);
     faces[1] = triangle(pyramidVertices[1], pyramidVertices[2], pyramidVertices[4]);
     faces[2] = triangle(pyramidVertices[2], pyramidVertices[3], pyramidVertices[4]);

@@ -2,8 +2,11 @@
 
 void Cube::draw()
 {
+    rgb colors[6]={rgb(1,0,0),rgb(0,1,0),rgb(0,0,1),rgb(1,1,0),rgb(1,0,1),rgb(0,1,1)};
     for (int i = 0; i < 6; i++)
     {
+        // glColor3d(color.r, color.g, color.b);
+        glColor3d(colors[i].r, colors[i].g, colors[i].b);
         planes[i].draw();
     }
 }
@@ -53,19 +56,24 @@ void Cube::planePointsCalulation(){
     points3D f = bottomLowerLeft + points3D(side, side, 0);
     points3D g = bottomLowerLeft + points3D(side, side, side);
     points3D h = bottomLowerLeft + points3D(0, side, side);
+    
     planes[1] = plane(e, f, g, h);
 
     // Repeat for the remaining four faces
     //PLANE 3: LEFT FACE
+    
     planes[2] = plane(a, d, h, e);
 
     //PLANE 4: RIGHT FACE
+    // glColor3d(0, 1, 0);
     planes[3] = plane(b, c, g, f);
-
+    // glColor3d(1, 0, 0);
     //PLANE 5: FRONT FACE
+    // glColor3d(1, 0, 1);
     planes[4] = plane(a, b, f, e);
-
+    
     //PLANE 6: BACK FACE
+    // glColor3d(1, 1, 0);
     planes[5] = plane(d, c, g, h);
 
 

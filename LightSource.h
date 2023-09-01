@@ -4,11 +4,12 @@
 #include "Ray.h"
 #include "helper.h"
 // #include "globals.h"
-// #include "Object.h"
+#include "Object.h"
 class LightSource{
     public:
     points3D sourcePosition;
     double fallOff;
+    bool isSpotLight=false;
     LightSource();
     LightSource(points3D position,double falloff);
     virtual void draw()=0;

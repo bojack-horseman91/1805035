@@ -4,6 +4,7 @@
 #include "reflectionCoefficient.h"
 #include "helper.h"
 #include "globals.h"
+#include "SpotLight.h"
 
 Object::Object()
 {
@@ -27,14 +28,27 @@ rgb Object::getAmbientColor()
 
     return color * reflectionCoefficient.ambient;
 }
+bool Object::willIlluminate(Ray toSource, double distance)
+{
+     //check for collisions with other objects
+    for (Object *obj : myObjects)
+    {
+        if (obj->getIntersectionPoints(toSource))
+        {
+            if (obj->t_value > 0 && obj->t_value < distance)
+                return false;
+        }
+    }
 
+    return true;
+}
 
 rgb Object::getDiffuseAndSpecularColor(){
     points3D normal=normalAtIntersectionPoint;
     points3D reflectedRay=this->reflectedRay.normalize();
     double lambert = 0;
     double phong = 0;
-    const double epsilon = 0.001; // Define your desired epsilon value
+    const double epsilon = 0.00000001; // Define your desired epsilon value
        // Calculate ambient light
     
     for (LightSource *lightSource : myLightSources)
@@ -46,6 +60,21 @@ rgb Object::getDiffuseAndSpecularColor(){
         // {
         //     continue;
         // }
+        if(lightSource->isSpotLight){
+            SpotLight* spotLight=(SpotLight*)lightSource;
+            if (acos(toSource.normalize().dot(spotLight->lookDirection)) > (spotLight->cutOffAngle*DEG2RAD))
+                {
+                    continue;
+                }
+        }
+
+        if(!willIlluminate(Ray(newPoint,toSource.normalize()),toSource.length()))
+        {
+            // lambert+=0.2;
+            continue;
+        }
+
+
         double d = toSource.length();
         double scalingFactor = exp(-(d * d * lightSource->fallOff));
         toSource = toSource.normalize();
@@ -60,7 +89,7 @@ rgb Object::getDiffuseAndSpecularColor(){
  
     
     // Add diffuse and specular contributions
-     return  this->color* (lambert )+ color * (this->isFloor?0:1) * phong;
+     return  color*(lambert )+ color * (this->isFloor?0:1) * phong;
     
     // You can use 'calculated_light' for shading or rendering.
 
