@@ -1,7 +1,7 @@
 #include "camera.h"
 
-double cameraScaleFactor = 0.1;
-double rotationTheta = 0.07;
+double cameraScaleFactor = 0.8;
+double rotationTheta = 0.09;
 
 void moveWithoutReferenceChange(int direction) {
     // 
@@ -40,12 +40,12 @@ void moveCameraLeft() {
 
 void moveCameraForward() {
     points3D viewVector = center - eye;
-    moveCamera(viewVector);
+    moveCamera(viewVector.normalize());
 }
 
 void moveCameraBackward() {
     points3D viewVector = center - eye;
-    moveCamera(viewVector*-1);
+    moveCamera(viewVector.normalize()*-1);
 }
 
 void rotateCamera(int direction, points3D axis) {
